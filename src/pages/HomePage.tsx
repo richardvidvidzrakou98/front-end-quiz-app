@@ -9,11 +9,9 @@ import SubjectCard from '../components/SubjectCard';
 import ThemeToggleButton from '../components/ThemeToggleButton'; // Assuming you have a theme toggle button component
 
 const Container = styled.div`
-  //height: 100%;
   min-height: 100vh;
   background-color: #f0f4f8;
   padding: 9rem;
-  //position: relative;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -21,39 +19,46 @@ const Container = styled.div`
     justify-content: space-between;
     padding: 4rem;
   }
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+  }
 `;
 
 const HomeContentContainer = styled.div`
   background-color: #f0f4f8;
   width: 100%;
-  padding-top: 5%;
   display: flex;
-  flex-direction: row;
-  gab: 1rem;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    padding-top: 5%;
+    gap: 1rem;
+  }
 `;
 
 const TitleContainer = styled.div`
-  height: 30vh;
   text-align: center;
-  margin-bottom: 5rem;
-  margin-left: -5%;
-  width: 30vw;
-  margin-top: 1rem;
+  margin-bottom: 2rem;
   color: white;
-  position: relative;
-  bottom: 6rem;
+
   @media (min-width: 810px) {
     text-align: left;
     margin-bottom: 0;
+    margin-left: -5%;
+    width: 30vw;
+    height: 30vh;
+    position: relative;
+    bottom: 6rem;
   }
 `;
 
 const Title = styled.div`
   font-size: 2rem;
   color: #333;
-  margin: 0;
 
   @media (min-width: 768px) {
     font-size: 3rem;
@@ -61,22 +66,23 @@ const Title = styled.div`
 `;
 
 const TitleBold = styled.div`
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #333;
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
 `;
 
 const Subtitle = styled.i`
   font-size: 0.9rem;
   color: #666;
-  margin-bottom: 20%;
-  text-align: center;
-  position: relative;
-  top: 30%;
+  margin-top: 0.5rem;
+  display: block;
 
   @media (min-width: 768px) {
-    text-align: left;
-    margin-bottom: 3rem;
+    margin-top: 2rem;
   }
 `;
 
@@ -84,11 +90,11 @@ const SubjectList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  width: 50vw;
-  margin-left: 16%;
+  width: 100%;
 
   @media (min-width: 768px) {
     max-width: 400px;
+    margin-left: 16%;
   }
 `;
 
@@ -107,10 +113,10 @@ const HomePage: React.FC = () => {
 
   return (
     <Container>
+      <ToggleContainer>
+        <ThemeToggleButton />
+      </ToggleContainer>
       <HomeContentContainer>
-        <ToggleContainer>
-          <ThemeToggleButton />
-        </ToggleContainer>
         <TitleContainer>
           <Title>Welcome to the </Title>
           <TitleBold>Frontend Quiz!</TitleBold>

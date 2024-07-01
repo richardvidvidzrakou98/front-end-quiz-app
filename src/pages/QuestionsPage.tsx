@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ThemeToggleButton from '../components/ThemeToggleButton';
 import htmlIcon from '../assets/images/html_icon-removebg-preview.png';
@@ -12,128 +12,154 @@ import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 const Container = styled.div`
   min-height: 100vh;
   background-color: #f0f4f8;
-  padding: 9rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   @media (min-width: 768px) {
+    padding: 4rem;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    padding: 4rem;
   }
 `;
 
 const QuestionContentContainer = styled.div`
-  background-color: #f0f4f8;
+  border-radius: 16px;
   width: 100%;
-  padding-top: 5%;
+  max-width: 500px;
   display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  align-items: center;
-  justify-content: center;
-`;
+  flex-direction: column;
+  padding: 2rem;
+  margin-bottom: 2rem;
 
-const QuestionContainer = styled.div`
-  height: 10vh;
-  text-align: center;
-  margin-bottom: 5rem;
-  margin-left: -5%;
-  width: 30vw;
-  margin-top: -110px;
-  color: white;
-  display: flex;
-  position: relative;
-  bottom: 6rem;
-
-  @media (min-width: 810px) {
-    text-align: left;
+  @media (min-width: 768px) {
     margin-bottom: 0;
   }
 `;
 
+const QuestionContainer = styled.div`
+  text-align: center;
+  height: 45vh;
+  margin-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+  @media (min-width: 200px) and (max-width: 765px) {
+    text-align: left;
+    height: 25vh;
+  }
+`;
+
 const QuestionTitle = styled.div`
-  font-size: 1rem;
-  color: #000;
-  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: -20%rem;
+  }
 `;
 
 const AnswerList = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  width: 50vw;
-  margin-left: 16%;
+  gap: 1.2rem;
 
   @media (min-width: 768px) {
-    max-width: 400px;
+    width: 30%;
+    margin-right: 5rem;
   }
+  // @media (min-width: 781px) {
+  //   width: 60vw;
+  //   margin-right: 5rem;
+  //   background-color: blue;
+  // }
+  // @media (min-width: 1111px) {
+  //   width: 30vw;
+  //   margin-right: 5rem;
+  //   background-color: green;
+  // }
 `;
 
 const AnswerCard = styled.div<{ selected: boolean; correct?: boolean }>`
   background-color: ${(props) =>
     props.correct === true
-      ? '#d1e7dd'
+      ? '#fff'
       : props.correct === false && props.selected
-      ? '#f8d7da'
+      ? '#fff'
       : props.selected
       ? '#e7e7e7'
       : '#fff'};
-  border: 1px solid
-    ${(props) =>
-      props.correct === true
-        ? '#0f5132'
-        : props.correct === false && props.selected
-        ? '#f5c2c7'
-        : '#ccc'};
-  border-radius: 8px;
-  margin-bottom: 14px;
+  border: ${(props) =>
+    props.correct === true
+      ? '2px solid #26D782'
+      : props.correct === false && props.selected
+      ? '1.5px solid red'
+      : 'none'};
+  border-radius: 16px;
+  text-align: center; /* Center the text */
   padding: 1rem;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  // justify-content: center; /* Center content horizontally */
+  gap: 1rem; /* Add some space between the label and text */
 
   &:hover {
     background-color: ${(props) =>
-      props.correct === undefined ? '#d1e7dd' : ''};
+      props.correct === undefined ? '#f0f0f0' : ''};
   }
 `;
 
 const AnswerLabel = styled.span<{ correct?: boolean; selected?: boolean }>`
   background-color: ${(props) =>
     props.correct === true
-      ? '#0f5132'
-      : props.correct === false
-      ? '#f5c2c7'
+      ? '#26D782'
+      : props.correct === false && props.selected
+      ? '#EE5454'
       : props.selected
       ? '#b0b0b0'
-      : '#ccc'};
-  color: #fff;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
+      : '#EFF0F1'};
+  color: ${(props) =>
+    props.correct === true
+      ? '#fff'
+      : props.correct === false && props.selected
+      ? '#fff'
+      : props.selected
+      ? '#fff'
+      : '#606060'};
+  font-weight: bold;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 0.5rem;
 `;
 
-const SubmitButton = styled.button`
-  background-color: #007bff;
+const SubmitButton = styled.button<{ subjectColor: string }>`
+  background-color: ${(props) => props.subjectColor};
   color: #fff;
+  width: 100%;
   border: none;
-  border-radius: 8px;
+  border-radius: 16px;
   padding: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${(props) =>
+      props.subjectColor ? props.subjectColor + 'CC' : '#0056b3'};
   }
 
   &:disabled {
@@ -146,6 +172,22 @@ const ToggleContainer = styled.div`
   position: absolute;
   top: 1rem;
   right: 1rem;
+`;
+
+const ProgressBarContainer = styled.div`
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+  margin-bottom: 2rem;
+  width: 100%;
+`;
+
+const ProgressBar = styled.div<{ subjectColor: string }>`
+  background-color: ${(props) => props.subjectColor};
+  height: 100%;
+  width: 0;
+  transition: width 0.3s;
 `;
 
 const subjectIcons: { [key: string]: string } = {
@@ -177,60 +219,56 @@ const isSubjectValid = (
 
 const QuestionsPage: React.FC = () => {
   const { subject } = useParams<{ subject?: string }>();
+  const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [correct, setCorrect] = useState<boolean | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
+    subject && isSubjectValid(subject)
+      ? Array(questionsData[subject].length).fill(null)
+      : [],
+  );
+  const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
 
   if (!subject || !isSubjectValid(subject)) {
-    return (
-      <Container>
-        <div>
-          Invalid subject selected. Please go back and select a valid subject.
-        </div>
-      </Container>
-    );
+    return <div>Invalid subject selected. Please select a valid subject.</div>;
   }
 
-  const questions = questionsData[subject] || [];
-  const optionsLabels = ['A', 'B', 'C', 'D'];
+  const questions = questionsData[subject];
+  const currentQuestion = questions[currentQuestionIndex];
 
-  const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
-    setError(null);
-    setCorrect(null); // Reset the correct state when selecting a new option
+  const handleAnswerClick = (answer: string) => {
+    const newSelectedAnswers = [...selectedAnswers];
+    newSelectedAnswers[currentQuestionIndex] = answer;
+    setSelectedAnswers(newSelectedAnswers);
   };
 
   const handleSubmit = () => {
-    if (!selectedOption) {
-      setError('Please select an answer.');
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setShowCorrectAnswers(false);
     } else {
-      const currentQuestion = questions[currentQuestionIndex];
-      const isCorrect = selectedOption === currentQuestion.correctAnswer;
-      setCorrect(isCorrect);
-
-      // Move to next question after a short delay, regardless of whether the answer is correct or not
-      setTimeout(() => {
-        if (currentQuestionIndex < questions.length - 1) {
-          setCurrentQuestionIndex(currentQuestionIndex + 1);
-          setSelectedOption(null);
-          setCorrect(null);
-        } else {
-          console.log('Quiz completed');
-          // Handle quiz completion (e.g., show results)
-        }
-      }, 2000); // Short delay to show the feedback
+      const score = selectedAnswers.filter(
+        (answer, index) => answer === questions[index].correctAnswer,
+      ).length;
+      navigate(`/quiz-completed/${subject}`, {
+        state: { score, total: questions.length },
+      });
     }
   };
+
+  const progressPercentage =
+    ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
     <Container>
       <QuestionContentContainer>
-        <ToggleContainer>
-          <ThemeToggleButton />
-        </ToggleContainer>
-        <div>
-          <QuestionContainer>
+        <QuestionContainer>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginBottom: '1rem',
+            }}
+          >
             {subjectIcons[subject] && (
               <img
                 src={subjectIcons[subject]}
@@ -239,75 +277,75 @@ const QuestionsPage: React.FC = () => {
                 style={{ marginRight: '1rem' }}
               />
             )}
-            <div style={{ height: '30px', display: 'flex' }}>
+            <div>
               {subjectTitle[subject] && (
-                <span
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                  }}
-                >
+                <span style={{ color: '#333', fontWeight: 'bold' }}>
                   {subjectTitle[subject]}
                 </span>
               )}
             </div>
-          </QuestionContainer>
-          <QuestionTitle
-            style={{
-              marginLeft: '-20px',
-
-              marginTop: '-17px',
-              fontWeight: 'bold',
-              fontSize: '24px',
-            }}
-          >
-            {questions[currentQuestionIndex]?.question}
-          </QuestionTitle>
-        </div>
-
-        <AnswerList>
-          {questions[currentQuestionIndex]?.options.map(
-            (option: string, index: number) => {
-              const isSelected = selectedOption === option;
-              const isCorrect =
-                correct !== null &&
-                option === questions[currentQuestionIndex].correctAnswer;
-              const isWrong = correct === false && isSelected;
-
-              return (
-                <AnswerCard
-                  key={option}
-                  selected={isSelected}
-                  correct={isCorrect || isWrong}
-                  onClick={() => handleOptionClick(option)}
-                >
-                  <AnswerLabel
-                    correct={isCorrect || isWrong}
-                    selected={isSelected}
-                  >
-                    {optionsLabels[index]}
-                  </AnswerLabel>
-                  {option}
-                  {correct !== null &&
-                    (isCorrect ? (
-                      <FaCheckCircle color="green" />
-                    ) : (
-                      isSelected && <FaTimesCircle color="red" />
-                    ))}
-                </AnswerCard>
-              );
-            },
-          )}
-          <SubmitButton
-            onClick={handleSubmit}
-            disabled={selectedOption === null || correct !== null}
-            style={{ backgroundColor: subjectColor[subject] }}
-          >
-            Submit Answer
-          </SubmitButton>
-          {error && <div style={{ color: 'red' }}>{error}</div>}
-        </AnswerList>
+          </div>
+          <QuestionTitle>{currentQuestion.question}</QuestionTitle>
+        </QuestionContainer>
+        <ProgressBarContainer>
+          <ProgressBar
+            subjectColor={subjectColor[subject]}
+            style={{ width: `${progressPercentage}%` }}
+          />
+        </ProgressBarContainer>
       </QuestionContentContainer>
+      <AnswerList>
+        {currentQuestion.options.map((answer, index) => (
+          <AnswerCard
+            key={index}
+            onClick={() => handleAnswerClick(answer)}
+            selected={selectedAnswers[currentQuestionIndex] === answer}
+            correct={
+              showCorrectAnswers
+                ? answer === currentQuestion.correctAnswer
+                : undefined
+            }
+          >
+            <AnswerLabel
+              selected={selectedAnswers[currentQuestionIndex] === answer}
+              correct={
+                showCorrectAnswers
+                  ? answer === currentQuestion.correctAnswer
+                  : undefined
+              }
+            >
+              {String.fromCharCode(65 + index)}
+            </AnswerLabel>
+            {answer}
+            {showCorrectAnswers && answer === currentQuestion.correctAnswer && (
+              <FaCheckCircle color="#26D782" />
+            )}
+            {showCorrectAnswers &&
+              answer !== currentQuestion.correctAnswer &&
+              selectedAnswers[currentQuestionIndex] === answer && (
+                <FaTimesCircle color="#EE5454" />
+              )}
+          </AnswerCard>
+        ))}
+        <SubmitButton
+          onClick={
+            selectedAnswers[currentQuestionIndex] !== null
+              ? () =>
+                  showCorrectAnswers
+                    ? handleSubmit()
+                    : setShowCorrectAnswers(true)
+              : undefined
+          }
+          disabled={selectedAnswers[currentQuestionIndex] === null}
+          subjectColor={subjectColor[subject]}
+        >
+          {currentQuestionIndex < questions.length - 1
+            ? showCorrectAnswers
+              ? 'Next Question'
+              : 'Submit'
+            : 'Submit and View Results'}{' '}
+        </SubmitButton>
+      </AnswerList>
     </Container>
   );
 };

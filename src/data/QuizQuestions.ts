@@ -16,19 +16,52 @@ const questionsData = {
       correctAnswer: '<a>',
     },
     {
-      question: 'What is the purpose of the alt attribute in an <img> tag?',
-      options: [
-        'To specify the image source',
-        'To provide alternative text for the image',
-        'To set the image height',
-        'To set the image width',
-      ],
-      correctAnswer: 'To provide alternative text for the image',
+      question:
+        'Which tag is used to define the most important heading in HTML?',
+      options: ['<h6>', '<heading>', '<head>', '<h1>'],
+      correctAnswer: '<h1>',
     },
     {
-      question: 'Which HTML tag is used to define an unordered list?',
+      question:
+        'Which attribute is used to provide a unique identifier to an HTML element?',
+      options: ['class', 'id', 'name', 'identity'],
+      correctAnswer: 'id',
+    },
+    {
+      question: 'What is the correct HTML element for inserting a line break?',
+      options: ['<lb>', '<break>', '<br>', '<line>'],
+      correctAnswer: '<br>',
+    },
+    {
+      question: 'What does the <title> tag in HTML do?',
+      options: [
+        'Sets the page title in the browser tab',
+        'Defines a section of content',
+        'Creates a hyperlink',
+        'Adds a tooltip to an element',
+      ],
+      correctAnswer: 'Sets the page title in the browser tab',
+    },
+    {
+      question:
+        'Which attribute is used to specify an alternate text for an image, if the image cannot be displayed?',
+      options: ['src', 'alt', 'title', 'href'],
+      correctAnswer: 'alt',
+    },
+    {
+      question: 'Which element is used to create an ordered list in HTML?',
       options: ['<ul>', '<ol>', '<li>', '<list>'],
-      correctAnswer: '<ul>',
+      correctAnswer: '<ol>',
+    },
+    {
+      question: 'Which HTML attribute is used to define inline styles?',
+      options: ['class', 'id', 'style', 'css'],
+      correctAnswer: 'style',
+    },
+    {
+      question: 'What does the <th> tag in HTML represent?',
+      options: ['Table header', 'Table row', 'Table cell', 'Table foot'],
+      correctAnswer: 'Table header',
     },
   ],
   CSS: [
@@ -59,7 +92,43 @@ const questionsData = {
       options: ['background-color', 'color', 'bg-color', 'background-image'],
       correctAnswer: 'background-color',
     },
+    {
+      question: 'Which property is used to change the font size of an element?',
+      options: ['text-size', 'font-size', 'text-style', 'font-style'],
+      correctAnswer: 'font-size',
+    },
+    {
+      question: 'How do you select all p elements inside a div element?',
+      options: ['div p', 'div.p', 'div + p', 'div ~ p'],
+      correctAnswer: 'div p',
+    },
+    {
+      question: 'Which property is used to change the margin of an element?',
+      options: ['padding', 'margin', 'border', 'spacing'],
+      correctAnswer: 'margin',
+    },
+    {
+      question: 'What is the default value of the position property?',
+      options: ['relative', 'absolute', 'fixed', 'static'],
+      correctAnswer: 'static',
+    },
+    {
+      question: 'How do you make the text bold in CSS?',
+      options: [
+        'font-weight: bold;',
+        'font-style: bold;',
+        'text-decoration: bold;',
+        'text-weight: bold;',
+      ],
+      correctAnswer: 'font-weight: bold;',
+    },
+    {
+      question: 'Which property is used to change the width of an element?',
+      options: ['height', 'width', 'size', 'length'],
+      correctAnswer: 'width',
+    },
   ],
+
   JavaScript: [
     {
       question: 'What is JavaScript primarily used for?',
@@ -87,18 +156,64 @@ const questionsData = {
       options: ['push()', 'pop()', 'shift()', 'unshift()'],
       correctAnswer: 'push()',
     },
+    {
+      question: 'Which company developed JavaScript?',
+      options: ['Microsoft', 'Netscape', 'Google', 'Apple'],
+      correctAnswer: 'Netscape',
+    },
+    {
+      question: 'Which symbol is used for comments in JavaScript?',
+      options: ['//', '/* */', '<!-- -->', 'Both // and /* */'],
+      correctAnswer: 'Both // and /* */',
+    },
+    {
+      question: 'What does "DOM" stand for?',
+      options: [
+        'Document Object Model',
+        'Data Object Model',
+        'Document Order Model',
+        'Data Order Model',
+      ],
+      correctAnswer: 'Document Object Model',
+    },
+    {
+      question: 'How do you write "Hello World" in an alert box?',
+      options: [
+        'msg("Hello World");',
+        'alert("Hello World");',
+        'msgBox("Hello World");',
+        'alertBox("Hello World");',
+      ],
+      correctAnswer: 'alert("Hello World");',
+    },
+    {
+      question:
+        'What is the correct syntax for referring to an external script called "script.js"?',
+      options: [
+        '<script href="script.js">',
+        '<script name="script.js">',
+        '<script src="script.js">',
+        '<script file="script.js">',
+      ],
+      correctAnswer: '<script src="script.js">',
+    },
+    {
+      question: 'Which event occurs when the user clicks on an HTML element?',
+      options: ['onchange', 'onclick', 'onmouseover', 'onmouseclick'],
+      correctAnswer: 'onclick',
+    },
   ],
+
   Accessibility: [
     {
       question: 'What is web accessibility?',
       options: [
         'Ensuring that a website is visually appealing',
-        'Ensuring that a website can be accessed by everyone, including people with disabilities',
+        'Website can be accessed by everyone',
         'Ensuring that a website loads quickly',
         'Ensuring that a website is mobile-friendly',
       ],
-      correctAnswer:
-        'Ensuring that a website can be accessed by everyone, including people with disabilities',
+      correctAnswer: 'Website can be accessed by everyone',
     },
     {
       question: 'Which attribute is used to provide a label for form elements?',
@@ -120,6 +235,52 @@ const questionsData = {
         'Which HTML element is used to define important text that screen readers will emphasize?',
       options: ['<strong>', '<em>', '<important>', '<highlight>'],
       correctAnswer: '<strong>',
+    },
+    {
+      question: 'Which attribute is used to describe the purpose of an image?',
+      options: ['title', 'alt', 'src', 'role'],
+      correctAnswer: 'alt',
+    },
+    {
+      question: 'What is the purpose of the tabindex attribute?',
+      options: [
+        'To define the tab order of an element',
+        'To define the text style of an element',
+        'To define the content order of an element',
+        'To define the role of an element',
+      ],
+      correctAnswer: 'To define the tab order of an element',
+    },
+    {
+      question: 'Which ARIA role is used to define a button?',
+      options: ['role="button"', 'role="link"', 'role="form"', 'role="input"'],
+      correctAnswer: 'role="button"',
+    },
+    {
+      question: 'What is the purpose of using semantic HTML elements?',
+      options: [
+        'To improve the visual design of a website',
+        'To improve SEO and accessibility',
+        'To reduce the loading time of a website',
+        'To add animations to a website',
+      ],
+      correctAnswer: 'To improve SEO and accessibility',
+    },
+    {
+      question: 'Which element should be used to create a navigational link?',
+      options: ['<a>', '<link>', '<nav>', '<button>'],
+      correctAnswer: '<a>',
+    },
+    {
+      question:
+        'Which property can be used to hide an element from screen readers but keep it visible on the screen?',
+      options: [
+        'display: none;',
+        'visibility: hidden;',
+        'aria-hidden="true"',
+        'opacity: 0;',
+      ],
+      correctAnswer: 'aria-hidden="true"',
     },
   ],
 };
