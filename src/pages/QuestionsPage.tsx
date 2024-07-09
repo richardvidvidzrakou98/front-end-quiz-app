@@ -226,6 +226,7 @@ const QuestionsPage: React.FC = () => {
       ? Array(questionsData[subject].length).fill(null)
       : [],
   );
+
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
 
   if (!subject || !isSubjectValid(subject)) {
@@ -305,6 +306,11 @@ const QuestionsPage: React.FC = () => {
                 ? answer === currentQuestion.correctAnswer
                 : undefined
             }
+            // style={{
+            //   display: 'flex',
+            //   justifyContent: 'center',
+            //   alignItems: 'center',
+            // }}
           >
             <AnswerLabel
               selected={selectedAnswers[currentQuestionIndex] === answer}
@@ -317,14 +323,17 @@ const QuestionsPage: React.FC = () => {
               {String.fromCharCode(65 + index)}
             </AnswerLabel>
             {answer}
-            {showCorrectAnswers && answer === currentQuestion.correctAnswer && (
-              <FaCheckCircle color="#26D782" />
-            )}
-            {showCorrectAnswers &&
-              answer !== currentQuestion.correctAnswer &&
-              selectedAnswers[currentQuestionIndex] === answer && (
-                <FaTimesCircle color="#EE5454" />
-              )}
+            <div style={{ marginLeft: 'auto' }}>
+              {showCorrectAnswers &&
+                answer === currentQuestion.correctAnswer && (
+                  <FaCheckCircle color="#26D782" />
+                )}
+              {showCorrectAnswers &&
+                answer !== currentQuestion.correctAnswer &&
+                selectedAnswers[currentQuestionIndex] === answer && (
+                  <FaTimesCircle color="#EE5454" />
+                )}
+            </div>
           </AnswerCard>
         ))}
         <SubmitButton
@@ -349,5 +358,4 @@ const QuestionsPage: React.FC = () => {
     </Container>
   );
 };
-
 export default QuestionsPage;

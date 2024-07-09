@@ -6,7 +6,7 @@ import cssIcon from '../assets/images/css_icon.png';
 import jsIcon from '../assets/images/js_icon.png';
 import accessibilityIcon from '../assets/images/accessibility_icon.png';
 import SubjectCard from '../components/SubjectCard';
-import ThemeToggleButton from '../components/ThemeToggleButton'; // Assuming you have a theme toggle button component
+import ThemeToggleButton from '../components/ThemeToggleButton';
 
 const Container = styled.div`
   min-height: 100vh;
@@ -58,7 +58,8 @@ const TitleContainer = styled.div`
 
 const Title = styled.div`
   font-size: 2rem;
-  color: #333;
+  color: #313e51;
+  font-weight: 100;
 
   @media (min-width: 768px) {
     font-size: 3rem;
@@ -68,7 +69,7 @@ const Title = styled.div`
 const TitleBold = styled.div`
   font-size: 2.5rem;
   font-weight: 700;
-  color: #333;
+  color: #313e51;
 
   @media (min-width: 768px) {
     font-size: 3rem;
@@ -152,5 +153,4 @@ const HomePage: React.FC = () => {
     </Container>
   );
 };
-
 export default HomePage;
